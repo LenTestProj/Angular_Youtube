@@ -38,7 +38,7 @@
 >
   Rooms List
 
-  <table>
+  <table class="table">
     <tr>
       <th>Index Value</th>
       <th>Even/Odd</th>
@@ -51,24 +51,28 @@
     </tr>
     <tr
       [ngClass]="e ? 'even' : 'odd'"
-      *ngFor="let room of roomsList | slice:0:2; let e = even; let o = odd; let i = index"
+      *ngFor="
+        let room of roomsList | slice : 0 : 2;
+        let e = even;
+        let o = odd;
+        let i = index
+      "
     >
       <td>{{ i | percent }}</td>
       <td>{{ e ? "Even" : "Odd" }}</td>
       <td>{{ room.roomNumber }}</td>
       <td>{{ room.roomType }}</td>
-      <td>{{ room.price | currency:'EUR' }}</td>
+      <td>{{ room.price | currency : "EUR" }}</td>
       <td>{{ room.amenities | uppercase }}</td>
-      <td>{{ room.checkinTime | date:'dd/MMM/yyy' }}</td>
-      <!-- date pipes --> 
-      <td>{{room.rating|number:'1.0-0'}}</td>
+      <td>{{ room.checkinTime | date : "dd/MMM/yyy" }}</td>
+      <!-- date pipes -->
+      <td>{{ room.rating | number : "1.0-0" }}</td>
       <!-- number pipe 1.0-0 one number before decimal place and 1-2 indicates one number after decimal place upto two numbers -->
     </tr>
   </table>
 </div>
 
 <button (click)="toggle()">Toggle</button>
-
 
 <!-- concepts learnt -->
 <!-- date pipes -->
