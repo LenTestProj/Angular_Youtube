@@ -1,27 +1,50 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  DoCheck,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Room, RoomList } from './rooms';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-rooms',
   templateUrl: './rooms.component.html',
   styleUrls: ['./rooms.component.scss'],
 })
-export class RoomsComponent implements OnInit {
+export class RoomsComponent
+  implements OnInit, DoCheck, AfterViewInit, AfterViewChecked
+{
   hotelName = 'Hilton Hotel';
   numberOfRooms = 10;
   hideRooms = false;
+  selectedRoom!: RoomList;
   rooms: Room = {
     availableRooms: 10,
     bookedRooms: 5,
     totalRooms: 20,
   };
-
+  title = 'Room List';
   roomsList: RoomList[] = [];
 
+  @ViewChild(HeaderComponent)
+  headerComponent!: HeaderComponent;
+
   constructor() {}
+  ngAfterViewChecked(): void {
+    console.log('after view checked');
+  }
+  ngAfterViewInit(): void {
+    this.headerComponent.title = 'Rooms View';
+  }
+  //this hook will be called after the view has been loaded in this file.
+  //for example after the header component is loaded the above hook will be invoked
 
   ngOnInit(): void {
-    this.roomsList=[
+    console.log(this.headerComponent);
+    this.roomsList = [
       {
         roomNumber: 1,
         roomType: 'Deluxe Room',
@@ -31,7 +54,7 @@ export class RoomsComponent implements OnInit {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
         checkinTime: new Date('11-Nov-2021'),
         checkoutTime: new Date('12-Nov-2021'),
-        rating:4.5
+        rating: 4.5,
       },
       {
         roomNumber: 2,
@@ -42,7 +65,7 @@ export class RoomsComponent implements OnInit {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
         checkinTime: new Date('11-Nov-2021'),
         checkoutTime: new Date('12-Nov-2021'),
-        rating:3.423
+        rating: 3.423,
       },
       {
         roomNumber: 3,
@@ -53,12 +76,39 @@ export class RoomsComponent implements OnInit {
           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
         checkinTime: new Date('11-Nov-2021'),
         checkoutTime: new Date('12-Nov-2021'),
-        rating:2.6
+        rating: 2.6,
       },
-    ]
+    ];
   }
 
+  //detects cahnges in your entire application
+  ngDoCheck(): void {
+    console.log('On changes is called');
+  }
+
+  //do not use ngDoCheck and ngOnChanges in the same component
   toggle() {
     this.hideRooms = !this.hideRooms;
+    this.title = 'Rooms List';
+  }
+
+  selectRoom(room: RoomList) {
+    this.selectedRoom = room;
+  }
+
+  addRoom() {
+    const room: RoomList = {
+      roomNumber: 4,
+      roomType: 'Deluxe Room',
+      amenities: 'Air conditioner, free wi-fi, TV, Bathroom, Kitchen',
+      price: 500,
+      photos:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
+      checkinTime: new Date('11-Nov-2021'),
+      checkoutTime: new Date('12-Nov-2021'),
+      rating: 4.5,
+    };
+    // this.roomsList.push(room);
+    this.roomsList = [...this.roomsList, room];
   }
 }
