@@ -36,15 +36,7 @@
 </div>
 
 <div
-  *ngIf="
-    rooms
-      ? rooms.availableRooms
-        ? rooms.availableRooms > 0
-          ? true
-          : false
-        : false
-      : false
-  "
+  *ngIf="hideRooms"
 >
   <app-rooms-list
     [rooms]="roomsList"

@@ -3,6 +3,7 @@ import {
   AfterViewInit,
   Component,
   DoCheck,
+  OnDestroy,
   OnInit,
   QueryList,
   ViewChild,
@@ -37,6 +38,7 @@ export class RoomsComponent
   @ViewChildren(HeaderComponent) headerChildrenComponent!: QueryList<HeaderComponent>
 
   constructor() {}
+  
   ngAfterViewChecked(): void {
     console.log('after view checked');
   }

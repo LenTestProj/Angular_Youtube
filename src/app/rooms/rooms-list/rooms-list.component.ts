@@ -7,6 +7,7 @@ import {
   ChangeDetectionStrategy,
   OnChanges,
   SimpleChanges,
+  OnDestroy,
 } from '@angular/core';
 import { RoomList } from '../rooms';
 
@@ -16,13 +17,17 @@ import { RoomList } from '../rooms';
   styleUrls: ['./rooms-list.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class RoomsListComponent implements OnInit, OnChanges {
+export class RoomsListComponent implements OnInit, OnChanges,OnDestroy {
   @Input() rooms: RoomList[] = [];
   //the above directive is used to get data from the parent component.
   @Input() title: string = '';
 
   @Output() selectedRoom = new EventEmitter<RoomList>(); //send what type data you need to send to parent component
   constructor() {}
+  ngOnDestroy(): void {
+console.log("on destroy called for room slist component");
+//used for memory freeing code
+  }
   ngOnChanges(changes: SimpleChanges): void {
     console.log(changes);
     if (changes['title']) {
