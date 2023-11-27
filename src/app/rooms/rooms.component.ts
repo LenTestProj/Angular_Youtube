@@ -6,11 +6,13 @@ import {
   OnDestroy,
   OnInit,
   QueryList,
+  SkipSelf,
   ViewChild,
   ViewChildren,
 } from '@angular/core';
 import { Room, RoomList } from './rooms';
 import { HeaderComponent } from '../header/header.component';
+import { RoomsService } from './services/rooms.service';
 
 @Component({
   selector: 'app-rooms',
@@ -37,7 +39,12 @@ export class RoomsComponent
 
   @ViewChildren(HeaderComponent) headerChildrenComponent!: QueryList<HeaderComponent>
 
-  constructor() {}
+  // roomService=new RoomsService()
+
+  //@skipSelf tells the component to look for service globally but not in the current component
+  constructor(@SkipSelf() private roomsService:RoomsService) {
+
+  }
   
   ngAfterViewChecked(): void {
     console.log('after view checked');
@@ -51,47 +58,14 @@ export class RoomsComponent
   //for example after the header component is loaded the above hook will be invoked
 
   ngOnInit(): void {
-    console.log(this.headerComponent);
-    this.roomsList = [
-      {
-        roomNumber: 1,
-        roomType: 'Deluxe Room',
-        amenities: 'Air Conditioner, free Wi-fi, TV, bathroom, Kitchen',
-        price: 500,
-        photos:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
-        checkinTime: new Date('11-Nov-2021'),
-        checkoutTime: new Date('12-Nov-2021'),
-        rating: 4.5,
-      },
-      {
-        roomNumber: 2,
-        roomType: 'Deluxe Room',
-        amenities: 'Air Conditioner, free Wi-fi, TV, bathroom, Kitchen',
-        price: 1000,
-        photos:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
-        checkinTime: new Date('11-Nov-2021'),
-        checkoutTime: new Date('12-Nov-2021'),
-        rating: 3.423,
-      },
-      {
-        roomNumber: 3,
-        roomType: 'Private Suite',
-        amenities: 'Air Conditioner, free Wi-fi, TV, bathroom, Kitchen',
-        price: 1500,
-        photos:
-          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
-        checkinTime: new Date('11-Nov-2021'),
-        checkoutTime: new Date('12-Nov-2021'),
-        rating: 2.6,
-      },
-    ];
+   this.roomsList=this.roomsService.getRooms();
+
+    
   }
 
   //detects cahnges in your entire application
   ngDoCheck(): void {
-    console.log('On changes is called');
+    this.roomsService
   }
 
   //do not use ngDoCheck and ngOnChanges in the same component

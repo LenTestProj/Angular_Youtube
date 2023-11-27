@@ -1,5 +1,6 @@
 import { AfterViewInit, Component,ComponentRef,ElementRef,OnInit,ViewChild, ViewContainerRef } from '@angular/core';
 import { RoomsComponent } from './rooms/rooms.component';
+import { LoggerService } from './logger.service';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +28,11 @@ export class AppComponent implements OnInit,AfterViewInit {
   }) name!:ElementRef
 
   ngOnInit(): void {
+    this.loggerService?.Log('AppComponent.ngOnInit()');
     this.name.nativeElement. innerText="Hello";
+  }
+
+  constructor(private loggerService:LoggerService){
+
   }
 }
