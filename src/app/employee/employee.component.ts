@@ -5,16 +5,14 @@ import { RoomsService } from '../rooms/services/rooms.service';
   selector: 'app-employee',
   templateUrl: './employee.component.html',
   styleUrls: ['./employee.component.scss'],
-  providers:[RoomsService]
+  // providers: [RoomsService],
 })
 export class EmployeeComponent implements OnInit {
+  empName: string = 'John';
 
-  empName:string='John';
-  
-  constructor(@Self() private roomseService:RoomsService) { }
+  constructor(private roomseService: RoomsService) {}
+  // constructor(@Self() private roomseService: RoomsService) {}
   //@Self indicates that the service is only available locally in this component
 
-  ngOnInit(): void {
-  }
-
+  ngOnInit(): void {}
 }

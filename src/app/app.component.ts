@@ -1,13 +1,24 @@
-import { AfterViewInit, Component,ComponentRef,ElementRef,OnInit,ViewChild, ViewContainerRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentRef,
+  ElementRef,
+  OnInit,
+  Optional,
+  ViewChild,
+  ViewContainerRef,
+  Inject,
+} from '@angular/core';
 import { RoomsComponent } from './rooms/rooms.component';
 import { LoggerService } from './logger.service';
+import { localStorageToken } from './localStorage.token';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent implements OnInit,AfterViewInit {
+export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     throw new Error('Method not implemented.');
   }
@@ -23,16 +34,21 @@ export class AppComponent implements OnInit,AfterViewInit {
   //   read:ViewContainerRef
   // })vcr!:ViewContainerRef;
 
-  @ViewChild('name',{
-    static:true
-  }) name!:ElementRef
+  @ViewChild('name', {
+    static: true,
+  })
+  name!: ElementRef;
 
   ngOnInit(): void {
     this.loggerService?.Log('AppComponent.ngOnInit()');
-    this.name.nativeElement. innerText="Hello";
+    this.name.nativeElement.innerText = 'Hello';
+
+    this.localStorage.setItem('name', 'hotel Cali');
   }
 
-  constructor(private loggerService:LoggerService){
-
-  }
+  //optioanl is used so that no error is occured during the runtime
+  constructor(
+    @Optional() private loggerService: LoggerService,
+    @Inject(localStorageToken) private localStorage: Storage
+  ) {}
 }
