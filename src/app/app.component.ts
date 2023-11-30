@@ -43,7 +43,9 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.loggerService?.Log('AppComponent.ngOnInit()');
     this.name.nativeElement.innerText = 'Hello';
 
-    this.localStorage.setItem('name', 'hotel Cali');
+    if (this.localStorage) {
+      this.localStorage.setItem('name', 'hotel Cali');
+    }
   }
 
   //optioanl is used so that no error is occured during the runtime
