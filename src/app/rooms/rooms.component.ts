@@ -13,7 +13,8 @@ import {
 import { Room, RoomList } from './rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-rooms',
@@ -25,7 +26,7 @@ export class RoomsComponent
 {
   hotelName = 'Hilton Hotel';
   numberOfRooms = 10;
-  hideRooms = false;
+  hideRooms = true;
   selectedRoom!: RoomList;
   rooms: Room = {
     availableRooms: 10,
@@ -42,6 +43,11 @@ export class RoomsComponent
     observer.complete();
     // observer.error
   });
+
+  totalBytes = 0;
+  subscription!: Subscription;
+  //room stream varaible stored in rooms$
+  rooms$ = this.roomsService.getRooms$;
 
   @ViewChild(HeaderComponent)
   headerComponent!: HeaderComponent;
@@ -66,6 +72,26 @@ export class RoomsComponent
   //for example after the header component is loaded the above hook will be invoked
 
   ngOnInit(): void {
+    this.roomsService.getPhotos().subscribe((event) => {
+      switch (event.type) {
+        case HttpEventType.Sent: {
+          console.log('Request has been made');
+          break;
+        }
+        case HttpEventType.ResponseHeader: {
+          console.log('Request success');
+          break;
+        }
+        case HttpEventType.DownloadProgress: {
+          this.totalBytes += event.loaded;
+          break;
+        }
+        case HttpEventType.Response: {
+          console.log(event.body);
+        }
+      }
+    });
+
     this.stream.subscribe({
       next: (value) => console.log(value),
       complete: () => console.log('complete'),
@@ -74,7 +100,10 @@ export class RoomsComponent
     this.stream.subscribe((data) => {
       console.log(data);
     });
-    this.roomsService.getRooms().subscribe((rooms) => {
+    // this.subscription = this.roomsService.getRooms$.subscribe((rooms) => {
+    //   this.roomsList = rooms;
+    // });
+    this.roomsService.getRooms$.subscribe((rooms) => {
       this.roomsList = rooms;
     });
   }
@@ -111,5 +140,34 @@ export class RoomsComponent
     this.roomsService.addRooms(room).subscribe((data) => {
       this.roomsList = data;
     });
+  }
+
+  editRoom() {
+    const room: RoomList = {
+      roomNumber: '3',
+      roomType: 'Deluxe Room',
+      amenities: 'Air conditioner, free wi-fi, TV, Bathroom, Kitchen',
+      price: 500,
+      photos:
+        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSYkxRAHhvrOZfFUawkqWMjuYwX-qBtRXz3QWyfvcVv&s',
+      checkinTime: new Date('11-Nov-2021'),
+      checkoutTime: new Date('12-Nov-2021'),
+      rating: 4.5,
+    };
+    this.roomsService.editRoom(room).subscribe((data) => {
+      this.roomsList = data;
+    });
+  }
+
+  deleteRoom() {
+    this.roomsService.deleteRoom('3').subscribe((data) => {
+      this.roomsList = data;
+    });
+  }
+
+  ngOnDestroy() {
+    if (this.subscription) {
+      this.subscription.unsubscribe();
+    }
   }
 }

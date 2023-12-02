@@ -1,7 +1,7 @@
 <!-- <h1>Welcome to {{ hotelName }}</h1> -->
 <app-header></app-header>
-<app-header></app-header>
-<app-header></app-header>
+<!-- <app-header></app-header>
+<app-header></app-header> -->
 <div [hidden]="hideRooms">
   Number of Rooms:
   <div
@@ -35,9 +35,7 @@
   <button (click)="addRoom()">Add Room</button>
 </div>
 
-<div
-  *ngIf="hideRooms"
->
+<div *ngIf="hideRooms">
   <app-rooms-list
     [rooms]="roomsList"
     [title]="title"
@@ -47,5 +45,10 @@
 
 <button (click)="toggle()">Toggle</button>
 
+<button (click)="editRoom()">Edit Room</button>
+
+<button (click)="deleteRoom()">Delete Room</button>
 <!-- concepts learnt -->
 <!-- date pipes -->
+
+<h1>{{ totalBytes }} loaded</h1>
