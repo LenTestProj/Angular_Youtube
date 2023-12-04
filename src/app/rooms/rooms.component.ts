@@ -13,7 +13,7 @@ import {
 import { Room, RoomList } from './rooms';
 import { HeaderComponent } from '../header/header.component';
 import { RoomsService } from './services/rooms.service';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, catchError, map, of } from 'rxjs';
 import { HttpEventType } from '@angular/common/http';
 
 @Component({
@@ -46,8 +46,23 @@ export class RoomsComponent
 
   totalBytes = 0;
   subscription!: Subscription;
+  error$ = new Subject<string>();
+
+  getError$ = this.error$.asObservable();
+
+  //Subject is the base class for all streams in RXJS
+
   //room stream varaible stored in rooms$
-  rooms$ = this.roomsService.getRooms$;
+
+  rooms$ = this.roomsService.getRooms$.pipe(
+    catchError((err)=>{
+      console.log(err);
+      this.error$.next(err.message);
+      return of([])
+    })
+  );
+
+  roomsCount$=this.roomsService.getRooms$.pipe(map((rooms)=>rooms.length))
 
   @ViewChild(HeaderComponent)
   headerComponent!: HeaderComponent;
@@ -72,6 +87,7 @@ export class RoomsComponent
   //for example after the header component is loaded the above hook will be invoked
 
   ngOnInit(): void {
+    this.error$
     this.roomsService.getPhotos().subscribe((event) => {
       switch (event.type) {
         case HttpEventType.Sent: {

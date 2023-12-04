@@ -2,6 +2,7 @@
 <app-header></app-header>
 <!-- <app-header></app-header>
 <app-header></app-header> -->
+<!-- {{rooms$ | async|json}} -->
 <div [hidden]="hideRooms">
   Number of Rooms:
   <div
@@ -34,13 +35,21 @@
 <div>
   <button (click)="addRoom()">Add Room</button>
 </div>
-
-<div *ngIf="hideRooms">
-  <app-rooms-list
+<h1>
+  <!-- {{getError$|async}} -->
+  Number of Rooms:{{roomsCount$|async}}
+</h1>
+<div *ngIf="rooms$|async as rooms">
+  <!-- <app-rooms-list
     [rooms]="roomsList"
     [title]="title"
     (selectedRoom)="selectRoom($event)"
-  ></app-rooms-list>
+  ></app-rooms-list> -->
+  <app-rooms-list
+  [rooms]="rooms" 
+  [title]="title"
+  (selectedRoom)="selectRoom($event)"
+></app-rooms-list>
 </div>
 
 <button (click)="toggle()">Toggle</button>

@@ -3,7 +3,7 @@ import { RoomList } from '../rooms';
 import { environment } from 'src/environments/environment';
 import { APP_SERVICE_CONFIG } from '../../AppConfig/appconfig.service';
 import { AppConfig } from '../../AppConfig/appconfig.interface';
-import { HttpClient, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { shareReplay } from 'rxjs';
 
 @Injectable({
@@ -47,6 +47,7 @@ export class RoomsService {
   // ];
   roomList: RoomList[] = [];
 
+  //  headers=new HttpHeaders({'token':'1234567asdfg'})
   getRooms$ = this.http.get<RoomList[]>('/api/rooms').pipe(shareReplay(1));
 
   constructor(
@@ -58,6 +59,7 @@ export class RoomsService {
   }
 
   getRooms() {
+    
     return this.http.get<RoomList[]>('/api/rooms'); //generics are used to define thr type ofdata that is returned from the server
   }
 

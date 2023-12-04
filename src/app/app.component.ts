@@ -12,6 +12,7 @@ import {
 import { RoomsComponent } from './rooms/rooms.component';
 import { LoggerService } from './logger.service';
 import { localStorageToken } from './localStorage.token';
+import { InitService } from './init.service';
 
 @Component({
   selector: 'app-root',
@@ -51,6 +52,9 @@ export class AppComponent implements OnInit, AfterViewInit {
   //optioanl is used so that no error is occured during the runtime
   constructor(
     @Optional() private loggerService: LoggerService,
-    @Inject(localStorageToken) private localStorage: Storage
-  ) {}
+    @Inject(localStorageToken) private localStorage: Storage,
+    private initService:InitService
+  ) {
+    console.log(initService.config)
+  }
 }
