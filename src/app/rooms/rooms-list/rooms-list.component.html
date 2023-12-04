@@ -27,7 +27,8 @@
     <td>{{ room.rating | number : "1.0-0" }}</td>
     <!-- number pipe 1.0-0 one number before decimal place and 1-2 indicates one number after decimal place upto two numbers -->
     <td>
-      <button class="btn btn-primary" (click)="selectRoom(room)">Select</button>
+      <!-- <button class="btn btn-primary" (click)="selectRoom(room)">Select</button> -->
+      <button [routerLink]="['/rooms',room.roomNumber]">Book Room</button>
     </td>
   </tr>
 </table>
