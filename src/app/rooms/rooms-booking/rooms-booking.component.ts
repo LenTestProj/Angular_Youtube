@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 @Component({
   selector: 'app-rooms-booking',
@@ -9,7 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class RoomsBookingComponent implements OnInit {
   id:number=0;
-  id$ !:Observable<number>;
+  // id$=this.router.params.pipe(map(params=>params["id"]));
+  id$=this.router.paramMap.pipe(map(params=>params.get('id')))
 
   constructor(private router:ActivatedRoute) { }
 
@@ -23,6 +24,9 @@ export class RoomsBookingComponent implements OnInit {
     // this.id$=this.router.params.pipe(
     //   map(params=>params['id'])
     // )
+    // this.router.paramMap.subscribe(params=>{
+    //   params.get('id')
+    // })
   }
 
 }
