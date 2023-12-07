@@ -22,9 +22,11 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { NotfoundComponent } from './notfound/notfound.component';
 import { RoomsBookingComponent } from './rooms/rooms-booking/rooms-booking.component';
+import { RoomsAddComponent } from './rooms/rooms-add/rooms-add.component';
+import { FormsModule } from '@angular/forms';
 
-function initFactory(initService:InitService){
-  return ()=>initService.init();
+function initFactory(initService: InitService) {
+  return () => initService.init();
 }
 
 @NgModule({
@@ -38,6 +40,7 @@ function initFactory(initService:InitService){
     AppNavComponent,
     NotfoundComponent,
     RoomsBookingComponent,
+    RoomsAddComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,6 +53,7 @@ function initFactory(initService:InitService){
     MatSidenavModule,
     MatIconModule,
     MatListModule,
+    FormsModule,
   ],
   providers: [
     {
@@ -57,16 +61,16 @@ function initFactory(initService:InitService){
       useValue: APP_CONFIG,
     },
     {
-      provide:HTTP_INTERCEPTORS,
-      useClass:RequestInterceptor,
-      multi:true
+      provide: HTTP_INTERCEPTORS,
+      useClass: RequestInterceptor,
+      multi: true,
     },
     {
-      provide:APP_INITIALIZER,
-      useFactory:initFactory,
-      deps:[InitService],
-      multi:true
-    }
+      provide: APP_INITIALIZER,
+      useFactory: initFactory,
+      deps: [InitService],
+      multi: true,
+    },
   ],
   bootstrap: [AppComponent],
 })
