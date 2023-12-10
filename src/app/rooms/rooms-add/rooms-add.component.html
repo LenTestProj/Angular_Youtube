@@ -1,10 +1,16 @@
-{{ room | json }}
-<div class="alert alert-success">
+{{ roomsForm.pristine | json }}
+{{ roomsForm.dirty | json }}
+{{ roomsForm.valid | json }}
+{{ roomsForm.invalid | json }}
+{{ roomsForm.value | json }}
+
+<div *ngIf="successMessage!==''" class="alert alert-success">
   {{ successMessage }}
 </div>
-<form (ngSubmit)="AddRoom()">
+<form #roomsForm="ngForm" (ngSubmit)="AddRoom(roomsForm)">
   <div class="form-group">
     <input
+      required
       class="form-control"
       type="text"
       name="roomType"
@@ -14,15 +20,27 @@
   </div>
   <div class="form-group">
     <input
+    #roomamenities="ngModel"
+    required
+    minlength="5"
+    maxlength="20"
+    
       class="form-control"
       type="text"
       name="amenities"
       [(ngModel)]="room.amenities"
       placeholder="Amenities"
     />
+    <div class="alert alert-danger" *ngIf="roomamenities.errors?.['minlength']">
+      "Amenities should be minimum 5 chars"
+    </div>
+    <div *ngIf="roomamenities.dirty && roomamenities.errors?.['required']">
+      Please provide the amenities
+    </div>
   </div>
   <div class="form-group">
     <input
+    required
       class="form-control"
       type="number"
       name="price"
@@ -32,6 +50,7 @@
   </div>
   <div class="form-group">
     <input
+    required
       class="form-control"
       type="text"
       name="photos"
@@ -41,6 +60,7 @@
   </div>
   <div class="form-group">
     <input
+    required
       class="form-control"
       type="datetime"
       name="checkinTime"
@@ -50,6 +70,7 @@
   </div>
   <div class="form-group">
     <input
+    required
       class="form-control"
       type="datetime"
       name="checkoutTime"
@@ -59,14 +80,24 @@
   </div>
   <div class="form-group">
     <input
+    #roomrating="ngModel"
+    min="1"
+    max="5"
+    required
       class="form-control"
       type="number"
       name="rating"
       [(ngModel)]="room.rating"
       placeholder="Rating"
     />
+    <div class="alert alert-danger" *ngIf="roomrating.errors?.['min'] || roomrating.errors?.['max']">
+      "Rating should be from 1 to 5"
+    </div>
   </div>
   <div>
-    <button class="btn btn-primary" type="submit">Submit</button>
+    <button [disabled]="roomsForm.invalid" class="btn btn-primary" type="submit">Submit</button>
   </div>
 </form>
+
+
+<!-- pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" -->
