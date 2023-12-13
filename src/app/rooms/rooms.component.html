@@ -27,6 +27,7 @@
     : "No Rooms"
 }}
 
+<router-outlet></router-outlet>
 <!-- {{roomsList | json}} -->
 <div *ngIf="selectedRoom">
   {{ selectedRoom | json }}
@@ -61,3 +62,6 @@
 <!-- date pipes -->
 
 <h1>{{ totalBytes }} loaded</h1>
+
+<!-- tells where to load the room booking component -->
+<!-- <router-outlet></router-outlet> -->
