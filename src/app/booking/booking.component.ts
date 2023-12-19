@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
+import { FormGroup,FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-booking',
@@ -8,9 +9,49 @@ import { ConfigService } from '../services/config.service';
 })
 export class BookingComponent implements OnInit {
 
-  constructor(private configService:ConfigService) { }
+  bookingForm!:FormGroup;
+
+  constructor(private configService:ConfigService, private fb:FormBuilder) { 
+  }
 
   ngOnInit(): void {
+    this.bookingForm=this.fb.group({
+      roomId: [""],
+      guestEmail: [""],
+      checkinDate: [""],
+      checkoutDate: [""],
+      bookingStatus: [""],
+      bookingAmount: [""],
+      bookingDate: [""],
+      mobileNumber: [""],
+      guestName: [""],
+      guestAddress: [""],
+      guestCity: [""],
+      guestState: [""],
+      guestCountry: [""],
+      guestZipCode: [""],
+      guestCount: [""],
+      guestList: [""]    
+    })  
   }
 
 }
+
+// export class Booking {
+//   roomId: string;
+//   guestEmail: string;
+//   checkinDate: Date;
+//   checkoutDate: Date;
+//   bookingStatus: string;
+//   bookingAmount: number;
+//   bookingDate: Date;
+//   mobileNumber: string;
+//   guestName: string;
+//   guestAddress: string;
+//   guestCity: string;
+//   guestState: string;
+//   guestCountry: string;
+//   guestZipCode: string;
+//   guestCount: number;
+//   guestList: []
+// }
