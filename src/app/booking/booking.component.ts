@@ -37,7 +37,7 @@ export class BookingComponent implements OnInit {
 
 }
 
-// export class Booking {
+// export interface Booking {
 //   roomId: string;
 //   guestEmail: string;
 //   checkinDate: Date;
