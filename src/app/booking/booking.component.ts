@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConfigService } from '../services/config.service';
-import { FormGroup,FormBuilder } from '@angular/forms';
+import { FormGroup,FormBuilder, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-booking',
@@ -16,7 +16,7 @@ export class BookingComponent implements OnInit {
 
   ngOnInit(): void {
     this.bookingForm=this.fb.group({
-      roomId: [""],
+      roomId: new FormControl({value:'2',disabled:true}),
       guestEmail: [""],
       checkinDate: [""],
       checkoutDate: [""],
@@ -25,33 +25,22 @@ export class BookingComponent implements OnInit {
       bookingDate: [""],
       mobileNumber: [""],
       guestName: [""],
-      guestAddress: [""],
-      guestCity: [""],
-      guestState: [""],
-      guestCountry: [""],
-      guestZipCode: [""],
-      guestCount: [""],
-      guestList: [""]    
+      address:this.fb.group({
+        addressLine1: [""],
+        addressLine2: [""],
+        city: [""],
+        state: [""],
+        country: [""],
+        zipCode: [""],
+      }),
+      guestCount: [""], 
     })  
   }
 
+    addBooking(){
+        // console.log(this.bookingForm.value) //displa the values but exclude the disabled value
+        console.log(this.bookingForm.getRawValue())
+    }
+
 }
 
-// export interface Booking {
-//   roomId: string;
-//   guestEmail: string;
-//   checkinDate: Date;
-//   checkoutDate: Date;
-//   bookingStatus: string;
-//   bookingAmount: number;
-//   bookingDate: Date;
-//   mobileNumber: string;
-//   guestName: string;
-//   guestAddress: string;
-//   guestCity: string;
-//   guestState: string;
-//   guestCountry: string;
-//   guestZipCode: string;
-//   guestCount: number;
-//   guestList: []
-// }
