@@ -4,7 +4,7 @@
 {{ roomsForm.invalid | json }}
 {{ roomsForm.value | json }} -->
 
-<div *ngIf="successMessage!==''" class="alert alert-success">
+<div  *ngIf="successMessage!==''" class="alert alert-success">
   {{ successMessage }}
 </div>
 <form #roomsForm="ngForm" (ngSubmit)="AddRoom(roomsForm)">
