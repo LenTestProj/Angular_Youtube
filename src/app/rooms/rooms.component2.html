@@ -1,5 +1,5 @@
 <!-- <h1>Welcome to {{ hotelName }}</h1> -->
-<!-- <app-header></app-header> -->
+<app-header></app-header>
 <!-- <app-header></app-header>
 <app-header></app-header> -->
 <!-- {{rooms$ | async|json}} -->
@@ -19,27 +19,27 @@
   ></div>
 </div> -->
 
-<!-- {{
+{{
   rooms
     ? rooms.availableRooms
       ? rooms.availableRooms
       : "No Rooms"
     : "No Rooms"
-}} -->
+}}
 
 <router-outlet></router-outlet>
 <!-- {{roomsList | json}} -->
-<!-- <div *ngIf="selectedRoom">
+<div *ngIf="selectedRoom">
   {{ selectedRoom | json }}
-</div> -->
+</div>
 
 <div>
-  <button class="btn btn-success" (click)="addRoom()">Add Room</button>
+  <button (click)="addRoom()">Add Room</button>
 </div>
-<!-- <h1> -->
+<h1>
   <!-- {{getError$|async}} -->
-  <!-- Number of Rooms:{{roomsCount$|async}} -->
-<!-- </h1> -->
+  Number of Rooms:{{roomsCount$|async}}
+</h1>
 <div *ngIf="rooms$|async as rooms">
   <!-- <app-rooms-list
     [rooms]="roomsList"
@@ -53,15 +53,15 @@
 ></app-rooms-list>
 </div>
 
-<!-- <button (click)="toggle()">Toggle</button>
+<button (click)="toggle()">Toggle</button>
 
 <button (click)="editRoom()">Edit Room</button>
 
-<button (click)="deleteRoom()">Delete Room</button> -->
+<button (click)="deleteRoom()">Delete Room</button>
 <!-- concepts learnt -->
 <!-- date pipes -->
 
-<!-- <h1>{{ totalBytes }} loaded</h1> -->
+<h1>{{ totalBytes }} loaded</h1>
 
 <!-- tells where to load the room booking component -->
 <!-- <router-outlet></router-outlet> -->
