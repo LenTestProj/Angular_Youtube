@@ -3,6 +3,7 @@ import { ConfigService } from '../services/config.service';
 import { FormGroup,FormBuilder, FormControl, FormArray, Validators } from '@angular/forms';
 import { BookingService } from './booking.service';
 import { exhaustMap, mergeMap, switchMap } from 'rxjs';
+import { CustomValidator } from './validators/custom-validator';
 
 @Component({
   selector: 'app-booking',
@@ -35,7 +36,7 @@ export class BookingComponent implements OnInit {
             mobileNumber: ["",{
                 updateOn:'blur'
             }],
-            guestName: ["",[Validators.required,Validators.minLength(5)]],
+            guestName: ["",[Validators.required,Validators.minLength(5),CustomValidator.validateName,CustomValidator.validateSpecialChar("*")]],
             address:this.fb.group({
               addressLine1: ["",{validators:[Validators.required]}],
               addressLine2: [""],
@@ -47,9 +48,10 @@ export class BookingComponent implements OnInit {
             guests: this.fb.array([this.addGuestControl()]), 
             tnc: new FormControl(false,{validators:Validators.requiredTrue})
           }
-        //   ,{
-        //         updateOn:'blur'
-        //     }
+          ,{
+                updateOn:'blur',
+                validators:[CustomValidator.validatedate]
+            }
             )
 
           this.getBookingData();
