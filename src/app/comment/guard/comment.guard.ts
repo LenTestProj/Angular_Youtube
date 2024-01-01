@@ -12,7 +12,7 @@ export class CommentGuard implements Resolve<Comments[]> {
     constructor(private commentService:CommentService){}
 
     resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Comments[] | Observable<Comments[]> | Promise<Comments[]> {
-        throw this.commentService.getComments();
+        return this.commentService.getComments();
     }
   
   

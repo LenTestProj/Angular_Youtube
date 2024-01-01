@@ -83,9 +83,9 @@ export class RoomsComponent
     console.log('after view checked');
   }
   ngAfterViewInit(): void {
-    this.headerComponent.title = 'Rooms View';
-    this.headerChildrenComponent.last.title = 'last title';
-    console.log(this.headerChildrenComponent.last.title);
+    // this.headerComponent.title = 'Rooms View';
+    // this.headerChildrenComponent.last.title = 'last title';
+    // console.log(this.headerChildrenComponent.last.title);
   }
   //this hook will be called after the view has been loaded in this file.
   //for example after the header component is loaded the above hook will be invoked
