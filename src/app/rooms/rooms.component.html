@@ -28,7 +28,6 @@
 }} -->
 
 <router-outlet></router-outlet>
-<!-- {{roomsList | json}} -->
 <!-- <div *ngIf="selectedRoom">
   {{ selectedRoom | json }}
 </div> -->
@@ -40,6 +39,14 @@
   <!-- {{getError$|async}} -->
   <!-- Number of Rooms:{{roomsCount$|async}} -->
 <!-- </h1> -->
+{{priceFilter|json}}
+<div>
+    <input type="number" class="form-control" 
+    placeholder="Price"
+    [formControl]="priceFilter"
+    />
+</div>
+
 <div *ngIf="rooms$|async as rooms">
   <!-- <app-rooms-list
     [rooms]="roomsList"
@@ -49,6 +56,7 @@
   <app-rooms-list
   [rooms]="rooms" 
   [title]="title"
+  [price]="priceFilter.value"
   (selectedRoom)="selectRoom($event)"
 ></app-rooms-list>
 </div>

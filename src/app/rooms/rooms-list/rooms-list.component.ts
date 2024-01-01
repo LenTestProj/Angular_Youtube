@@ -18,9 +18,11 @@ import { RoomList } from '../rooms';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RoomsListComponent implements OnInit, OnChanges,OnDestroy {
-  @Input() rooms: RoomList[]|null = [];
+  @Input() rooms: RoomList[] = [];
   //the above directive is used to get data from the parent component.
   @Input() title: string = '';
+
+  @Input() price=0;
 
   @Output() selectedRoom = new EventEmitter<RoomList>(); //send what type data you need to send to parent component
   constructor() {}

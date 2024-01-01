@@ -4,6 +4,7 @@ import { FormGroup,FormBuilder, FormControl, FormArray, Validators } from '@angu
 import { BookingService } from './booking.service';
 import { exhaustMap, mergeMap, switchMap } from 'rxjs';
 import { CustomValidator } from './validators/custom-validator';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-booking',
@@ -18,12 +19,14 @@ export class BookingComponent implements OnInit {
     return this.bookingForm.get('guests') as FormArray;
   } 
 
-  constructor(private configService:ConfigService, private fb:FormBuilder, private bookingService:BookingService) { 
+  constructor(private configService:ConfigService, private fb:FormBuilder, private bookingService:BookingService,
+  private route:ActivatedRoute) { 
   }
 
   ngOnInit(): void {
+    const roomId=this.route.snapshot.paramMap.get('roomId');
     this.bookingForm=this.fb.group({
-            roomId: new FormControl({value:'2',disabled:true},{validators:[Validators.required]}),
+            roomId: new FormControl({value:roomId,disabled:true},{validators:[Validators.required]}),
             guestEmail: ["",{
                 updateOn:'blur',
                 validators:[Validators.required,Validators.email]
@@ -102,7 +105,6 @@ export class BookingComponent implements OnInit {
     getBookingData(){
         // this.bookingForm.setValue() - akes all values compulsory
         this.bookingForm.patchValue({
-            roomId:'2',
             guestEmail: 'test@gmail.com',
             checkinDate: new Date('10-02-2020'),
             checkoutDate: '',
